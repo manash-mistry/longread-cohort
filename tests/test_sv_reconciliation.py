@@ -4,7 +4,7 @@ import pandas as pd
 import pytest
 
 from pogcohort.sv_reconciliation import (
-    USECOLS, apply_paper_filters, count_cohort, load_combined)
+    USECOLS, apply_paper_filters, count_by_sample, count_cohort, load_combined)
 
 HEADER = USECOLS
 ROWS = [
@@ -33,7 +33,7 @@ def table(tmp_path):
 
 
 def test_load_categories_and_normalization(table):
-    df = load_combined(table).set_index("tracking_id")
+    df = load_combined(table, filtered=False).set_index("tracking_id")
     assert len(df) == 9  # duplicate tracking_id dropped
     assert df.loc["POG1_False_delly-DEL1", "category"] == "illumina_only"
     assert df.loc["POG1_True_manta-DEL2", "category"] == "both"
@@ -53,7 +53,7 @@ def test_subset_by_sample(table):
 
 
 def test_paper_filters(table):
-    df = load_combined(table)
+    df = load_combined(table, filtered=False)
     kept = set(apply_paper_filters(df)["tracking_id"])
     assert "POG1_False_delly-DEL1" not in kept   # Illumina-only, low quality
     assert "POG1_True_delly-DEL9" not in kept    # in DGV
@@ -65,7 +65,7 @@ def test_paper_filters(table):
 
 
 def test_merged_tracking_id_quality_flag(table):
-    df = load_combined(table)
+    df = load_combined(table, filtered=False)
     # a merged row carrying both False and True Illumina IDs counts as high quality
     merged = pd.DataFrame([{
         "tracking_id": "POG1_False_delly-INV1;POG1_True_delly-INV2;POG1_nanomonSV_r_1",
@@ -76,18 +76,29 @@ def test_merged_tracking_id_quality_flag(table):
         "break2_position_end": 5001, "gene1": "None", "gene2": "None"}])
     p = table.parent / "merged.tsv.gz"
     pd.concat([pd.read_csv(table, sep="\t", dtype=str), merged]).to_csv(p, sep="\t", index=False)
-    row = load_combined(p).set_index("tracking_id").iloc[-1]
+    row = load_combined(p, filtered=False).set_index("tracking_id").iloc[-1]
     assert row["illumina_hq"] is True and row["category"] == "both"
     assert row["nanomonsv"] and not row["savana"]
-    # ...and a both-row with only a False flag is dropped by the paper filters
+    # ...and a both-row with only a False flag becomes nanopore_rescued
     both_false = df[df["tracking_id"] == "POG1_True_manta-DEL2"].copy()
     both_false["tracking_id"] = "POG1_False_manta-DEL3"
     both_false["illumina_hq"] = False
-    assert apply_paper_filters(both_false).empty
+    out = apply_paper_filters(both_false)
+    assert out["category"].tolist() == ["nanopore_rescued"]
+
+
+def test_filtered_default_and_low_agreement_flag(table):
+    df = load_combined(table)  # filtered by default
+    assert "POG1_False_delly-DEL1" not in set(df["tracking_id"])
+    assert set(df["category"].cat.categories) == {
+        "illumina_only", "nanopore_only", "both", "nanopore_rescued"}
+    assert not df["low_agreement"].any()
+    tab = count_by_sample(df)
+    assert "low_agreement" in tab.columns
 
 
 def test_count_cohort(table):
-    tab = count_cohort(load_combined(table))
+    tab = count_cohort(load_combined(table, filtered=False))
     assert tab.loc["deletion", "illumina_only"] == 4
     assert tab.loc["deletion", "both"] == 1
     assert tab.loc["deletion", "nanopore_only"] == 1

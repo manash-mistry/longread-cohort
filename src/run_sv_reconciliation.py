@@ -25,17 +25,21 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--samples", nargs="*", help="library IDs to keep (default: all)")
     ap.add_argument("--tag", default=None, help="output subfolder name")
+    ap.add_argument("--unfiltered", action="store_true",
+                    help="also write the no-filter view (default: paper filters + rescued)")
     args = ap.parse_args()
 
     tag = args.tag or ("subset_" + "_".join(args.samples) if args.samples else "all")
     out = Path("results/sv_reconciliation") / tag
     out.mkdir(parents=True, exist_ok=True)
 
-    df = load_combined(samples=args.samples)
+    df = load_combined(samples=args.samples, filtered=False)
     print(f"loaded {len(df):,} distinct SV rows for {df['library'].nunique()} samples")
 
     flt = apply_paper_filters(df)
-    print(f"after paper filters: {len(flt):,} rows")
+    print(f"after paper filters (+ nanopore_rescued): {len(flt):,} rows")
+    if not args.unfiltered:
+        df = flt  # "raw" outputs below then equal the filtered ones
 
     count_by_sample(df).to_csv(out / "counts_per_sample_raw.tsv", sep="\t")
     count_by_sample(flt).to_csv(out / "counts_per_sample_filtered.tsv", sep="\t")

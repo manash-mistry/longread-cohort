@@ -1,0 +1,51 @@
+gene_id	gene_name	cosmic_tier	cosmic_role	n_samples	n_svs	samples	effects	sv_types	driver_match	n_samples_large_event
+ENSG00000145113	MUC4	2	oncogene	15	16	POG1000,POG1002,POG1022,POG117-1,POG137,POG255,POG320,POG415-2,POG425,POG530,POG625,POG684,POG748,POG846,POG986	breakpoint_exon:11,breakpoint_intron:4,whole_gene:1	insertion:11,duplication:2,deletion:2,inversion:1	0	1
+ENSG00000168702	LRP1B	1	TSG	10	22	POG111,POG117-1,POG117-2,POG147,POG255,POG415-2,POG704,POG782,POG884,POG986	breakpoint_intron:20,breakpoint_exon:2	insertion:11,deletion:8,translocation:2,duplication:1	5	9
+ENSG00000164796	CSMD3	2	TSG	8	32	POG068,POG147,POG320,POG507,POG588,POG748,POG846,POG986	breakpoint_intron:26,breakpoint_exon:4,whole_gene:2	translocation:14,inversion:6,deletion:5,insertion:5,duplication:2	2	8
+ENSG00000153707	PTPRD	2	TSG	8	13	POG049,POG117-1,POG117-2,POG137,POG147,POG279,POG884,POG986	breakpoint_intron:13	insertion:7,deletion:5,duplication:1	1	4
+ENSG00000179399	GPC5	2	TSG	8	12	POG068,POG117-1,POG117-2,POG279,POG303,POG410,POG777,POG986	breakpoint_intron:12	insertion:7,translocation:3,inversion:1,duplication:1	2	2
+ENSG00000185008	ROBO2	2	TSG	8	12	POG1002,POG117-2,POG530,POG588,POG739,POG777,POG884,POG986	breakpoint_intron:12	insertion:9,deletion:2,duplication:1	1	2
+ENSG00000169862	CTNND2	2	oncogene	7	9	POG320,POG588,POG637,POG739,POG782,POG804,POG986	breakpoint_intron:9	deletion:5,insertion:2,duplication:1,translocation:1	0	3
+ENSG00000189283	FHIT	1	TSG; fusion	6	11	POG117-1,POG117-2,POG330,POG530,POG704,POG884	breakpoint_intron:11	deletion:8,translocation:1,duplication:1,insertion:1	0	3
+ENSG00000174469	CNTNAP2	2	TSG	6	9	POG068,POG1002,POG279,POG782,POG846,POG986	breakpoint_intron:9	deletion:4,duplication:2,insertion:2,translocation:1	0	4
+ENSG00000197157	SND1	1	oncogene; fusion	6	9	POG1000,POG1022,POG507,POG530,POG884,POG986	breakpoint_intron:9	translocation:5,duplication:3,deletion:1	2	5
+ENSG00000182901	RGS7	2		6	6	POG1002,POG320,POG739,POG846,POG884,POG986	breakpoint_intron:6	insertion:4,duplication:1,deletion:1	0	3
+ENSG00000131759	RARA	1	oncogene; fusion	5	8	POG255,POG303,POG320,POG748,POG777	breakpoint_intron:5,whole_gene:3	translocation:4,inversion:2,duplication:1,deletion:1	0	11
+ENSG00000147724	FAM135B	2		5	8	POG147,POG649,POG748,POG884,POG986	breakpoint_intron:7,whole_gene:1	insertion:4,deletion:2,duplication:1,inversion:1	2	3
+ENSG00000136997	MYC	1	oncogene; fusion	5	7	POG147,POG279,POG320,POG566,POG797	whole_gene:7	duplication:4,inversion:2,deletion:1	0	6
+ENSG00000196712	NF1	1	TSG; fusion	5	6	POG068,POG117-2,POG209,POG295,POG637	breakpoint_intron:4,breakpoint_exon:2	translocation:4,deletion:2	0	11
+ENSG00000085276	MECOM	1	oncogene; fusion	5	5	POG507,POG566,POG797,POG846,POG884	breakpoint_intron:4,breakpoint_exon:1	duplication:2,deletion:2,insertion:1	0	3
+ENSG00000153944	MSI2	1	oncogene; fusion	5	5	POG049,POG588,POG649,POG884,POG986	breakpoint_intron:4,whole_gene:1	insertion:2,translocation:1,duplication:1,inversion:1	0	10
+ENSG00000257923	CUX1	1	oncogene; TSG	5	5	POG049,POG1002,POG147,POG604,POG986	breakpoint_intron:3,whole_gene:2	deletion:2,inversion:2,insertion:1	1	5
+ENSG00000161405	IKZF3	1	oncogene; TSG; fusion	4	9	POG137,POG303,POG320,POG777	breakpoint_intron:4,whole_gene:4,breakpoint_exon:1	inversion:4,deletion:2,insertion:1,translocation:1,duplication:1	8	10
+ENSG00000141736	ERBB2	1	oncogene; fusion	4	8	POG137,POG303,POG320,POG777	breakpoint_intron:4,whole_gene:4	inversion:5,translocation:1,duplication:1,deletion:1	8	11
+ENSG00000140836	ZFHX3	1	TSG	4	7	POG507,POG684,POG846,POG884	breakpoint_intron:7	translocation:3,deletion:2,duplication:1,insertion:1	1	2
+ENSG00000176571	CNBD1	2		4	7	POG147,POG320,POG782,POG797	breakpoint_intron:4,whole_gene:3	deletion:4,inversion:1,insertion:1,translocation:1	0	9
+ENSG00000002834	LASP1	1	fusion	4	6	POG303,POG320,POG777,POG884	whole_gene:6	duplication:3,inversion:2,deletion:1	0	11
+ENSG00000104408	EIF3E	1	TSG; fusion	4	6	POG117-1,POG117-2,POG147,POG986	whole_gene:3,breakpoint_intron:2,breakpoint_exon:1	insertion:3,duplication:1,deletion:1,inversion:1	2	8
+ENSG00000197646	PDCD1LG2	1	oncogene; fusion	4	5	POG425,POG604,POG804,POG846	breakpoint_intron:3,whole_gene:2	duplication:4,deletion:1	0	2
+ENSG00000082805	ERC1	1	fusion	4	4	POG1002,POG117-2,POG425,POG704	breakpoint_intron:2,whole_gene:2	inversion:3,duplication:1	0	9
+ENSG00000140538	NTRK3	1	oncogene; fusion	4	4	POG425,POG649,POG884,POG986	breakpoint_intron:4	insertion:3,deletion:1	2	2
+ENSG00000141867	BRD4	1	oncogene; fusion	4	4	POG1002,POG117-2,POG279,POG320	breakpoint_intron:3,whole_gene:1	deletion:4	0	1
+ENSG00000159216	RUNX1	1	oncogene; TSG; fusion	4	4	POG1002,POG279,POG507,POG566	breakpoint_intron:4	deletion:2,duplication:1,translocation:1	0	4
+ENSG00000165671	NSD1	1	fusion	4	4	POG279,POG777,POG794,POG846	whole_gene:3,breakpoint_intron:1	inversion:3,deletion:1	0	1
+ENSG00000187323	DCC	2		4	4	POG117-1,POG530,POG704,POG884	breakpoint_intron:4	insertion:2,duplication:1,deletion:1	0	4
+ENSG00000196588	MRTFA	1	oncogene; TSG; fusion	4	4	POG068,POG1022,POG777,POG804	breakpoint_intron:4	duplication:2,insertion:1,translocation:1	0	0
+ENSG00000164362	TERT	1	oncogene; TSG	3	8	POG147,POG410,POG748	breakpoint_intron:5,whole_gene:3	insertion:4,duplication:2,inversion:1,deletion:1	6	2
+ENSG00000104320	NBN	1	TSG	3	6	POG147,POG279,POG320	whole_gene:6	inversion:3,duplication:2,deletion:1	0	11
+ENSG00000066032	CTNNA2	2	oncogene	3	5	POG068,POG782,POG986	breakpoint_intron:5	deletion:3,translocation:1,duplication:1	0	11
+ENSG00000178568	ERBB4	1	oncogene; TSG	3	5	POG279,POG507,POG986	breakpoint_intron:5	insertion:3,deletion:1,duplication:1	3	4
+ENSG00000112531	QKI	1	oncogene; TSG	3	4	POG111,POG117-1,POG117-2	breakpoint_intron:3,whole_gene:1	deletion:2,insertion:2	3	4
+ENSG00000135679	MDM2	1	oncogene	3	4	POG111,POG320,POG649	whole_gene:4	inversion:2,deletion:2	1	9
+ENSG00000162733	DDR2	1	oncogene	3	4	POG111,POG507,POG986	breakpoint_intron:4	translocation:4	1	7
+ENSG00000167258	CDK12	1	TSG	3	4	POG303,POG320,POG777	whole_gene:4	inversion:2,duplication:1,deletion:1	1	11
+ENSG00000173757	STAT5B	1	oncogene; TSG; fusion	3	4	POG295,POG748,POG777	breakpoint_intron:3,whole_gene:1	deletion:2,translocation:1,inversion:1	0	10
+ENSG00000196090	PTPRT	1	TSG	3	4	POG748,POG804,POG986	whole_gene:2,breakpoint_intron:2	inversion:2,deletion:1,insertion:1	1	4
+ENSG00000055609	KMT2C	1	TSG	3	3	POG117-2,POG255,POG360	breakpoint_intron:2,breakpoint_exon:1	insertion:1,duplication:1,translocation:1	0	3
+ENSG00000064012	CASP8	1	TSG	3	3	POG117-1,POG137,POG320	breakpoint_intron:3	translocation:1,deletion:1,insertion:1	2	4
+ENSG00000073584	SMARCE1	1	TSG	3	3	POG320,POG748,POG777	whole_gene:3	inversion:1,duplication:1,deletion:1	0	11
+ENSG00000076685	NT5C2	1	oncogene	3	3	POG1002,POG415-1,POG507	breakpoint_intron:2,whole_gene:1	insertion:2,duplication:1	0	2
+ENSG00000108924	HLF	1	oncogene; fusion	3	3	POG117-1,POG117-2,POG410	breakpoint_exon:2,breakpoint_intron:1	insertion:3	0	10
+ENSG00000116128	BCL9	1	oncogene; fusion	3	3	POG1000,POG111,POG777	whole_gene:3	deletion:2,duplication:1	0	12
+ENSG00000126353	CCR7	2	oncogene	3	3	POG320,POG748,POG777	whole_gene:3	inversion:1,duplication:1,deletion:1	0	11
+ENSG00000129993	CBFA2T3	1	TSG; fusion	3	3	POG049,POG415-1,POG804	breakpoint_intron:3	translocation:1,insertion:1,deletion:1	0	0
