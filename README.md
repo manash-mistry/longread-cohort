@@ -1,5 +1,12 @@
 # longread-cohort
 
+Long-read sequencing (Oxford Nanopore, PacBio) captures things short-read
+cancer sequencing cannot: large and complex structural variants, which parental
+copy of a chromosome a variant sits on (phasing), and DNA methylation read
+directly from the same molecules. Open-source pipelines now call all of these
+per sample, but nothing turns the per-sample output into cohort-level,
+annotated, clinically joined results. This repository is the start of that layer.
+
 A cohort-level interpretation and annotation layer for long-read somatic cancer
 sequencing. Per-sample variant calling is left to existing pipelines
 (nf-core/pacsomatic, LRSomatic); this project aggregates long-read structural
@@ -15,9 +22,10 @@ reproduces the source paper; first annotation pass done on 43 tumours.
 Long-Read POG (BC Cancer; O'Neill et al., *Cell Genomics* 2024,
 [PMC11605692](https://pmc.ncbi.nlm.nih.gov/articles/PMC11605692/)): 189 tumours
 from 181 patients, Oxford Nanopore PromethION, GRCh38. Processed data from
-https://www.bcgsc.ca/downloads/nanopore_pog/ (599 of 603 files, 1.3 GB, plus the
-short-read MAVIS and Mutect2 archives, 1.2 GB; the 17.3 GB copy-number archive is
-not yet downloaded). 43 tumours have a nanopore-sequenced blood normal and
+https://www.bcgsc.ca/downloads/nanopore_pog/ (599 of 603 files, 1.3 GB; the
+short-read MAVIS and Mutect2 archives, 1.2 GB; and, from the 17.3 GB
+copy-number archive, the Ploidetect segment files for the 43 nanopore-normal
+tumours only, stream-extracted without keeping the archive). 43 tumours have a nanopore-sequenced blood normal and
 therefore somatic long-read SV calls (nanomonsv, SAVANA); all 189 have Illumina
 tumour/normal calls. Gene model: GENCODE v50. Cancer genes: COSMIC Cancer Gene
 Census as shipped with the dataset.
@@ -86,22 +94,25 @@ per-sample table.
 
 ### 5. ERBB2 in POG137: nanopore adds structure, not detection
 
-POG137 (breast IDC) has the highest ERBB2 expression in the cohort (2,508 TPM;
-median 46). Short reads called two high-quality rearrangement breakpoints
-inside ERBB2 and seven more within 0.5 Mb, all also seen by nanopore.
-Nanopore (SAVANA) then adds five further breakpoints inside the gene: three
-nested inversions of 21–125 kb, a translocation to chr5, and a 9.3 Mb
-inversion. The short-read data did not miss the event; nanopore resolved
-finer structure of a rearranged locus that expression implies is amplified.
-Whether the extra breakpoints are real amplicon sub-structure or caller
-over-segmentation of a high-copy region needs read-level review. Detail in
+POG137 (breast IDC) carries an ERBB2 amplicon at 187–217 copies across the
+gene body in short-read Ploidetect, with the highest ERBB2 expression in the
+cohort (2,508 TPM; median 46). Short reads called the amplification and two
+high-quality rearrangement breakpoints inside ERBB2 plus seven more within
+0.5 Mb, all also seen by nanopore. Nanopore (SAVANA) adds five further
+breakpoints inside the gene — three nested inversions of 21–125 kb, a
+translocation to chr5, a 9.3 Mb inversion — and these coincide with
+copy-number step boundaries in the short-read depth signal. The short-read
+data did not miss the event; nanopore resolved sub-structure of an amplicon
+short reads had already detected. Read-level review remains the proper
+confirmation. Detail in
 [docs/cancer_gene_sv_summary.md §5b](docs/cancer_gene_sv_summary.md).
 
 ## Caveats
 
-- **Copy number not yet integrated.** The 17.3 GB Ploidetect archive is on
-  the download site but not local; the 7,865 Census hits inside > 5 Mb
-  events, and the ERBB2 amplification call, wait on it.
+- **Copy number not yet integrated.** Ploidetect segments are local for the
+  43 nanopore-normal tumours (not the other 146), but only the ERBB2 locus
+  has been checked by hand; the 7,865 Census hits inside > 5 Mb events are
+  still unclassified.
 - **Recurrence is length-biased** (section 3); no background model yet.
 - **`whole_gene` conflates** loss (deletion), gain (duplication) and intact
   relocation (inversion).
@@ -120,11 +131,29 @@ over-segmentation of a high-copy region needs read-level review. Detail in
 - **Sample-ID mapping** between VCF names (`POG117-1`) and clinical names
   (`POG117-OCT-2`) was derived from library IDs in the SAVANA VCF headers;
   the paper and repository do not document it.
-- **Sex chromosomes** are excluded by the paper's filter; my implementation
+- **Sex chromosomes** are excluded by the paper's filter; this implementation
   drops events with either end on X/Y, the authors' R code only events with
   both ends on the same sex chromosome (likely the 3-deletion difference).
 - **Low-agreement samples** are included and flagged, not removed.
 - **Not yet validated** against a truth set; HCC1395 / SEQC2 is planned.
+
+## Next
+
+1. **Copy-number integration.** Classify the 7,865 Census hits inside > 5 Mb
+   events against the Ploidetect segments (gain / loss / copy-neutral), and
+   test systematically whether nanopore-only breakpoints coincide with
+   copy-number step boundaries, as they do at ERBB2 in POG137.
+2. **Methylation and phasing on the same genes.** Join promoter methylation
+   (`AveragedMethylation_Promoters`), allelic DMRs and phase-block coverage to
+   the genes hit by nanopore SVs, per sample.
+3. **Background-corrected recurrence.** Replace the sample-count ranking with
+   a length- and fragile-site-aware expectation so long genes stop leading.
+4. **HCC1395 / SEQC2 validation.** Run the same reconciliation on the
+   HCC1395 cell-line pair against the SEQC2 somatic truth set to measure
+   caller precision and recall per SV type.
+5. **Raw-read access via EGA** (study EGAS00001001159) for read-level review
+   of nanopore-only calls, starting with the ERBB2 breakpoints and the
+   CREBBP deletion in POG044.
 
 ## Layout and reproduction
 
