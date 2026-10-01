@@ -1,5 +1,12 @@
 # longread-cohort
 
+Long-read sequencing (Oxford Nanopore, PacBio) captures things short-read
+cancer sequencing cannot: large and complex structural variants, which parental
+copy of a chromosome a variant sits on (phasing), and DNA methylation read
+directly from the same molecules. Open-source pipelines now call all of these
+per sample, but nothing turns the per-sample output into cohort-level,
+annotated, clinically joined results. This repository is the start of that layer.
+
 A cohort-level interpretation and annotation layer for long-read somatic cancer
 sequencing. Per-sample variant calling is left to existing pipelines
 (nf-core/pacsomatic, LRSomatic); this project aggregates long-read structural
@@ -120,11 +127,28 @@ over-segmentation of a high-copy region needs read-level review. Detail in
 - **Sample-ID mapping** between VCF names (`POG117-1`) and clinical names
   (`POG117-OCT-2`) was derived from library IDs in the SAVANA VCF headers;
   the paper and repository do not document it.
-- **Sex chromosomes** are excluded by the paper's filter; my implementation
+- **Sex chromosomes** are excluded by the paper's filter; this implementation
   drops events with either end on X/Y, the authors' R code only events with
   both ends on the same sex chromosome (likely the 3-deletion difference).
 - **Low-agreement samples** are included and flagged, not removed.
 - **Not yet validated** against a truth set; HCC1395 / SEQC2 is planned.
+
+## Next
+
+1. **Copy-number integration.** Classify the 7,865 Census hits inside > 5 Mb
+   events against Ploidetect segments (gain / loss / copy-neutral) and
+   confirm the ERBB2 amplification in POG137.
+2. **Methylation and phasing on the same genes.** Join promoter methylation
+   (`AveragedMethylation_Promoters`), allelic DMRs and phase-block coverage to
+   the genes hit by nanopore SVs, per sample.
+3. **Background-corrected recurrence.** Replace the sample-count ranking with
+   a length- and fragile-site-aware expectation so long genes stop leading.
+4. **HCC1395 / SEQC2 validation.** Run the same reconciliation on the
+   HCC1395 cell-line pair against the SEQC2 somatic truth set to measure
+   caller precision and recall per SV type.
+5. **Raw-read access via EGA** (study EGAS00001001159) for read-level review
+   of nanopore-only calls, starting with the ERBB2 breakpoints and the
+   CREBBP deletion in POG044.
 
 ## Layout and reproduction
 
