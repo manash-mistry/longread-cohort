@@ -161,20 +161,35 @@ present in nanopore, i.e. they are `both` in the combined table.
 plus three nanopore-only calls within 0.1 Mb (a 33 kb deletion at
 39.76–39.80 Mb and translocations to chr5 and chr15).
 
-**Amplification:** ERBB2 expression in POG137 is 2,508 TPM — the highest of
-187 tumours (cohort median 46, 90th percentile 162). A direct copy-number
-call is not in the downloaded data (the Ploidetect archive is not
-downloaded, the ASE table has no ERBB2 row for this sample, AmpliconArchitect
-ecDNA count is 0) and the paper does not mention ERBB2 or POG137.
+**Amplification (short-read Ploidetect, `Ploidetect/POG137/P00303_P00296/cna_condensed.txt`):**
+ERBB2 sits in a high-level amplicon. Segments across chr17:39.60–39.83 Mb
+have total copy number 50–57 (39.60–39.69 Mb) stepping up to **187–217
+copies across the gene body (39.69–39.74 Mb)** and 157–178 copies out to
+39.83 Mb, against CN 1.75 on either flank. ERBB2 expression is 2,508 TPM,
+the highest of 187 tumours (cohort median 46). AmpliconArchitect ecDNA
+count is 0; the paper does not mention ERBB2 or POG137.
 
-**Precise claim:** short reads did *not* miss this locus — they called two
-high-quality rearrangement breakpoints inside ERBB2 and seven more within
-0.5 Mb, all concordant with nanopore. What nanopore added is **five further
-breakpoints inside the gene** (three nested inversions of 21–125 kb, a chr5
-translocation, a 9.3 Mb inversion), i.e. finer structure of an already
-detected, rearranged locus whose expression level implies amplification.
-Whether the extra breakpoints are real sub-structure of the amplicon or
-SAVANA over-segmenting a high-copy region needs read-level review.
+The copy-number segment boundaries, which come only from short-read depth,
+line up with the nanopore-only breakpoints:
+
+| Ploidetect segment boundary | CN change | nearest nanopore-only breakpoint |
+|---|---|---|
+| 39,692,214 | 57 → 217 | 39,689,443 (chr5 translocation), 39,695,299 (125 kb inv) |
+| 39,709,626 | 194 → 191 | 39,712,980 (21 kb inv) |
+| 39,729,603 / 39,736,251 | 187 → 206 → 191 | 39,733,840 (21 kb inv end) |
+| 39,755,099 | 191 → 174 | 39,750,935 (52 kb inv end) |
+| 39,760,905 | 174 → 178 (A/B 150/28) | 39,761,616 (33 kb deletion start) |
+| 39,816,225 / 39,820,670 | 174 → 170 → 157 | 39,819,826 (125 kb inv end) |
+
+**Precise claim:** short reads did *not* miss this event — they called the
+amplification (≈200 copies) and two high-quality rearrangement breakpoints
+inside ERBB2, plus seven more within 0.5 Mb, all concordant with nanopore.
+What nanopore added is **five further breakpoints inside the gene** (three
+nested inversions of 21–125 kb, a chr5 translocation, a 9.3 Mb inversion),
+and these coincide with copy-number steps in the independent short-read
+depth signal. That argues they are real sub-structure of the amplicon rather
+than SAVANA over-segmenting a high-copy region, though read-level review is
+still the proper confirmation.
 
 ## 6. Caveats
 
