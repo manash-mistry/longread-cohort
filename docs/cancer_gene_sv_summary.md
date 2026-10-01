@@ -82,7 +82,7 @@ the median protein-coding gene is 29 kb; eight of the top ten are > 900 kb.
 | MSI2 | 1 | 5 | 5 | 429 | 12 | 0 | |
 | CUX1 | 1 | 5 | 5 | 468 | 11 | 1 | |
 | IKZF3 | 1 | 4 | 9 | 107 | 84 | 8 | all four samples are breast/ovarian: 17q12 ERBB2 amplicon |
-| ERBB2 | 1 | 4 | 8 | 43 | 186 | 8 | POG137 (breast): 9 nanopore-only breakpoints in/around ERBB2 — a complex amplicon; POG303, POG320 (breast), POG777 (ovarian): whole-gene within 2–5 Mb rescued events |
+| ERBB2 | 1 | 4 | 8 | 43 | 186 | 8 | POG137 (breast): 5 nanopore-only breakpoints inside ERBB2 on top of 2 concordant short-read ones (§5b); POG303, POG320 (breast), POG777 (ovarian): whole-gene within 2–5 Mb rescued events |
 
 Take-away: by sample count the list is dominated by long genes (length
 bias); by SV density the interesting entries are **ERBB2/IKZF3/RARA** (the
@@ -133,6 +133,48 @@ From the 3-sample subset (`results/cancer_gene_sv/subset_POG044_POG049_POG068/co
    (MPNST-type biology) even though the Census text lists only neurofibroma
    and glioma, so the keyword match reads "no" — an example of the keyword
    method under-calling.
+
+## 5b. ERBB2 in POG137 — what short reads saw and what nanopore added
+
+POG137 is a breast invasive ductal carcinoma (tumour content 41%). ERBB2 is
+chr17:39,687,914–39,730,426 (GENCODE v50).
+
+**Short-read calls (MAVIS table `mavis_summary_somatic_gd-P00303.tab`,
+chr17:39.3–39.9 Mb):** 9 somatic calls, 7 flagged high quality. Two have a
+breakpoint *inside* ERBB2 — an inversion 17:39,380,248–39,712,409 (delly +
+manta + transabyss) and an inversion 17:39,687,978–39,689,411 (delly +
+transabyss). The rest are inversions and chr5 translocations with
+breakpoints 0.1–0.5 Mb away (17:39,357,367; 39,819,611; 39,828,3xx) and one
+17:30.7–39.4 Mb inversion. Both ERBB2-internal short-read calls are also
+present in nanopore, i.e. they are `both` in the combined table.
+
+**Nanopore-only calls inside ERBB2 (all SAVANA):**
+
+| ID | type | break1 | break2 | size |
+|---|---|---|---|---|
+| savana_ID_37048_1 | inversion | chr17:39,695,299 | chr17:39,819,826 | 125 kb |
+| savana_ID_37049_1 | inversion | chr17:39,698,671 | chr17:39,750,935 | 52 kb |
+| savana_ID_37050_1 | inversion | chr17:39,712,980 | chr17:39,733,840 | 21 kb |
+| savana_ID_16840_1 | translocation | chr17:39,689,443 | chr5:105,601,603 | — |
+| savana_ID_37140_1 | inversion | chr17:30,372,205 | chr17:39,715,006 | 9.3 Mb |
+
+plus three nanopore-only calls within 0.1 Mb (a 33 kb deletion at
+39.76–39.80 Mb and translocations to chr5 and chr15).
+
+**Amplification:** ERBB2 expression in POG137 is 2,508 TPM — the highest of
+187 tumours (cohort median 46, 90th percentile 162). A direct copy-number
+call is not in the downloaded data (the Ploidetect archive is not
+downloaded, the ASE table has no ERBB2 row for this sample, AmpliconArchitect
+ecDNA count is 0) and the paper does not mention ERBB2 or POG137.
+
+**Precise claim:** short reads did *not* miss this locus — they called two
+high-quality rearrangement breakpoints inside ERBB2 and seven more within
+0.5 Mb, all concordant with nanopore. What nanopore added is **five further
+breakpoints inside the gene** (three nested inversions of 21–125 kb, a chr5
+translocation, a 9.3 Mb inversion), i.e. finer structure of an already
+detected, rearranged locus whose expression level implies amplification.
+Whether the extra breakpoints are real sub-structure of the amplicon or
+SAVANA over-segmenting a high-copy region needs read-level review.
 
 ## 6. Caveats
 
